@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- Configuração do Banco -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/lojadediscos</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">Luizpirata1.</property>
+
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Exibir SQL no console -->
+        <property name="hibernate.show_sql">true</property>
+
+        <!-- Mapeamento das Entidades -->
+        <mapping class="org.lojadediscos.model.Disco"/>
+        <mapping class="org.lojadediscos.model.Cliente"/>
+        <mapping class="org.lojadediscos.model.Venda"/>
+        <mapping class="org.lojadediscos.model.ItemVenda"/>
+    </session-factory>
+</hibernate-configuration>
