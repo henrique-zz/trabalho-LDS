@@ -34,10 +34,11 @@ O sistema é desenvolvido em Java com interface gráfica usando Swing e um padr�
 
 ## Tecnologias Utilizadas
 
-- Java 11+
-- Swing (GUI)
+- Java 
+- Swing 
 - DAO para acesso a dados (pode ser adaptado para banco de dados real)
 - Estrutura orientada a objetos com uso de herança e polimorfismo para telas
+- Hibernate para a conexão com Banco de Dados MySQL
 
 ---
 
