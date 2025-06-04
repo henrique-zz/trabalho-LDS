@@ -1,1 +1,49 @@
-# trabalho-LDS
+# Loja de Discos - Sistema de Cadastro e Vendas
+
+## Descrição
+
+Este projeto implementa um sistema simples para gerenciamento de uma loja de discos. O sistema permite:
+
+- Cadastro de clientes.
+- Cadastro de discos (produtos) com informações como título, artista, gênero, preço e estoque.
+- Realização de vendas associadas a clientes, incluindo controle de estoque e itens vendidos.
+
+O sistema é desenvolvido em Java com interface gráfica usando Swing e um padrão simples de acesso a dados (DAO).
+
+---
+
+## Funcionalidades
+
+- **Cadastro de Clientes**  
+  Cadastro com nome, e-mail e telefone.  
+  Listagem de clientes cadastrados.
+
+- **Cadastro de Discos**  
+  Cadastro de discos com título, artista, gênero, preço e quantidade em estoque.  
+  Listagem de discos cadastrados.
+
+- **Realizar Venda**  
+  Seleção de cliente e discos para adicionar ao carrinho.  
+  Controle da quantidade vendida e atualização automática do estoque.  
+  Registro da venda com data e itens.
+
+- **Navegação entre telas**  
+  Troca fácil entre telas de cadastro e venda.
+
+---
+
+## Tecnologias Utilizadas
+
+- Java 11+
+- Swing (GUI)
+- DAO para acesso a dados (pode ser adaptado para banco de dados real)
+- Estrutura orientada a objetos com uso de herança e polimorfismo para telas
+
+---
+
+## Como Executar
+
+1. Clone este repositório:
+
+```bash
+git clone https://github.com/seuusuario/lojadediscos.git
