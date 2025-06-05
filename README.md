@@ -44,7 +44,7 @@ O sistema é desenvolvido em Java com interface gráfica usando Swing e um padr�
 
 ## Como Executar
 
-1. Clone este repositório:
+1. Clone este repositório para dentro de uma pasta com o nome que desejar, então use alguma IDE (IntelliJ IDEA, NetBeans, Eclipse) que tenha compatibilidade com o Java:
 
 ```bash
 git clone https://github.com/seuusuario/lojadediscos.git
