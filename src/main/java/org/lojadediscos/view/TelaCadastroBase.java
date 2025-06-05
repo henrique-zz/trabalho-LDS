@@ -1,5 +1,7 @@
 package org.lojadediscos.view;
 
+import org.lojadediscos.services.RelatorioDiscos;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
@@ -11,6 +13,7 @@ public abstract class TelaCadastroBase extends JFrame {
     protected JButton btnExcluir = new JButton("Excluir");
     protected JButton btnCadastroCliente = new JButton("Ir para Cadastro de Clientes");
     protected JButton btnCadastroDiscos = new JButton("Ir para Cadastro de Discos");
+    protected JButton btnRelatorioEstoque = new JButton("Gerar Relatório Estoque dos Discos");
 
     public TelaCadastroBase(String titulo) {
         setTitle(titulo);
@@ -24,6 +27,7 @@ public abstract class TelaCadastroBase extends JFrame {
         btnExcluir.setBounds(380, 70, 100, 30);
         btnCadastroCliente.setBounds(380, 10, 200, 30);
         btnCadastroDiscos.setBounds(380, 10, 200, 30);
+        btnRelatorioEstoque.setBounds(320, 120, 250, 30);
 
         add(btnSalvar);
         add(btnListar);
@@ -31,10 +35,12 @@ public abstract class TelaCadastroBase extends JFrame {
         add(btnExcluir);
         add(btnCadastroCliente);
         add(btnCadastroDiscos);
+        add(btnRelatorioEstoque);
 
         btnVenda.addActionListener(this::irParaTelaVenda);
         btnCadastroCliente.addActionListener(this::abrirCadastroCliente);
         btnCadastroDiscos.addActionListener(this::abrirCadastroDisco);
+        btnRelatorioEstoque.addActionListener(this::geracaoPDF);
     }
 
     protected abstract void salvar(ActionEvent e);
@@ -54,5 +60,10 @@ public abstract class TelaCadastroBase extends JFrame {
     protected void abrirCadastroDisco(ActionEvent e) {
         new TelaCadastroDisco();
         dispose();
+    }
+
+    protected void geracaoPDF(ActionEvent e){
+        new RelatorioDiscos().gerarPDF();
+        JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso!");
     }
 }
