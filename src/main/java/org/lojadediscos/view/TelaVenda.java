@@ -20,7 +20,7 @@ public class TelaVenda extends JFrame {
     private JTextArea txtCarrinho = new JTextArea(10, 30);
     private JButton btnAdicionar = new JButton("Adicionar");
     private JButton btnFinalizar = new JButton("Finalizar Venda");
-    private JButton btnVoltar = new JButton("Voltar");
+    private JButton btnCadastroDiscos = new JButton("Voltar");
 
     private List<ItemVenda> carrinho = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class TelaVenda extends JFrame {
         scroll.setBounds(20, 140, 440, 200);
 
         btnFinalizar.setBounds(150, 360, 180, 40);
-        btnVoltar.setBounds(150, 410, 180, 40);
+        btnCadastroDiscos.setBounds(150, 410, 180, 40);
 
         add(lblCliente);
         add(cbClientes);
@@ -58,14 +58,14 @@ public class TelaVenda extends JFrame {
         add(btnAdicionar);
         add(scroll);
         add(btnFinalizar);
-        add(btnVoltar);
+        add(btnCadastroDiscos);
 
         carregarClientes();
         carregarDiscos();
 
         btnAdicionar.addActionListener(this::adicionarAoCarrinho);
         btnFinalizar.addActionListener(this::finalizarVenda);
-        btnVoltar.addActionListener(this::voltar);
+        btnCadastroDiscos.addActionListener(this::voltar);
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -133,6 +133,7 @@ public class TelaVenda extends JFrame {
         vendaDAO.salvar(venda);
 
         JOptionPane.showMessageDialog(this, "Venda realizada com sucesso!");
+        new TelaCadastroDisco();
         dispose();
     }
 

@@ -41,4 +41,23 @@ public class DiscoDAO {
         }
     }
 
+    public boolean excluir(int id) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Disco disco = session.get(Disco.class, id);
+            if (disco == null) {
+                return false;
+            }
+
+            transaction = session.beginTransaction();
+            session.remove(disco);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

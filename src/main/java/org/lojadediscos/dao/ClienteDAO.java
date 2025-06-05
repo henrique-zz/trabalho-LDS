@@ -27,4 +27,23 @@ public class ClienteDAO {
         }
     }
 
+    public boolean excluir(int id) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Cliente cliente = session.get(Cliente.class, id);
+            if (cliente == null) {
+                return false;
+            }
+
+            transaction = session.beginTransaction();
+            session.remove(cliente);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

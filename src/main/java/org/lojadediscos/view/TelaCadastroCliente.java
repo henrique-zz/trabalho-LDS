@@ -1,7 +1,9 @@
 package org.lojadediscos.view;
 
 import org.lojadediscos.dao.ClienteDAO;
+import org.lojadediscos.dao.DiscoDAO;
 import org.lojadediscos.model.Cliente;
+import org.lojadediscos.model.Disco;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,8 +14,6 @@ public class TelaCadastroCliente extends TelaCadastroBase {
     private JTextField txtNome = new JTextField(20);
     private JTextField txtEmail = new JTextField(20);
     private JTextField txtTelefone = new JTextField(20);
-
-    private JButton btnVoltar = new JButton("Ir para Cadastro de Discos");
 
     public TelaCadastroCliente() {
         super("Cadastro de Cliente");
@@ -30,22 +30,17 @@ public class TelaCadastroCliente extends TelaCadastroBase {
         lblTelefone.setBounds(20, 100, 80, 25);
         txtTelefone.setBounds(100, 100, 200, 25);
 
-        btnVoltar.setBounds(380, 10, 200, 30);
-
         add(lblNome);
         add(txtNome);
         add(lblEmail);
         add(txtEmail);
         add(lblTelefone);
         add(txtTelefone);
-        add(btnVoltar);
 
+        btnCadastroCliente.setVisible(false); // não permitir o botão que volta para esta mesma tela aparecer
         btnSalvar.addActionListener(this::salvar);
         btnListar.addActionListener(this::listar);
-        btnVoltar.addActionListener(e -> {
-            new TelaCadastroDisco();
-            dispose();
-        });
+        btnExcluir.addActionListener(this::excluir);
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -80,6 +75,37 @@ public class TelaCadastroCliente extends TelaCadastroBase {
                         .append("\n");
             }
             JOptionPane.showMessageDialog(this, sb.toString());
+        }
+    }
+
+    @Override
+    protected void excluir(ActionEvent e) {
+        ClienteDAO dao = new ClienteDAO();
+        List<Cliente> clientes = dao.listarTodos();
+
+        if (clientes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum cliente cadastrado.");
+            return;
+        }
+
+        JComboBox<Cliente> cbClientes = new JComboBox<>(clientes.toArray(new Cliente[0]));
+        int opcao = JOptionPane.showConfirmDialog(
+                this,
+                cbClientes,
+                "Selecione o cliente para excluir",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (opcao == JOptionPane.OK_OPTION) {
+            Disco selecionado = (Disco) cbClientes.getSelectedItem();
+            if (selecionado != null) {
+                boolean sucesso = dao.excluir(selecionado.getId());
+                if (sucesso) {
+                    JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao excluir o cliente.");
+                }
+            }
         }
     }
 }

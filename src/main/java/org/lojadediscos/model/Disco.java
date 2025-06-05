@@ -89,7 +89,7 @@ public class Disco {
 
     @Override
     public String toString() {
-        return titulo;
+        return titulo + " (ID: " + id + ")";
     }
 
 }

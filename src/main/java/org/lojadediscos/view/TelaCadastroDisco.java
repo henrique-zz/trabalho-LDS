@@ -15,8 +15,6 @@ public class TelaCadastroDisco extends TelaCadastroBase {
     private JTextField txtPreco = new JTextField(10);
     private JTextField txtEstoque = new JTextField(5);
 
-    private JButton btnCadastroCliente = new JButton("Ir para Cadastro de Clientes");
-
     public TelaCadastroDisco() {
         super("Cadastro de Disco");
 
@@ -40,8 +38,6 @@ public class TelaCadastroDisco extends TelaCadastroBase {
         lblEstoque.setBounds(20, 180, 80, 25);
         txtEstoque.setBounds(100, 180, 100, 25);
 
-        btnCadastroCliente.setBounds(380, 10, 200, 30);
-
         add(lblTitulo);
         add(txtTitulo);
         add(lblArtista);
@@ -52,14 +48,14 @@ public class TelaCadastroDisco extends TelaCadastroBase {
         add(txtPreco);
         add(lblEstoque);
         add(txtEstoque);
-        add(btnCadastroCliente);
 
+        getRootPane().setDefaultButton(btnSalvar); // permite que seja acionado quando apertarmos "ENTER"
+
+        btnCadastroDiscos.setVisible(false);
+        // não permitir o botão que volta para esta mesma tela aparecer
         btnSalvar.addActionListener(this::salvar);
         btnListar.addActionListener(this::listar);
-        btnCadastroCliente.addActionListener(e -> {
-            new TelaCadastroCliente();
-            dispose();
-        });
+        btnExcluir.addActionListener(this::excluir);
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -100,4 +96,36 @@ public class TelaCadastroDisco extends TelaCadastroBase {
             JOptionPane.showMessageDialog(this, sb.toString());
         }
     }
+
+    @Override
+    protected void excluir(ActionEvent e) {
+        DiscoDAO dao = new DiscoDAO();
+        List<Disco> discos = dao.listarTodos();
+
+        if (discos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum disco cadastrado.");
+            return;
+        }
+
+        JComboBox<Disco> cbDiscos = new JComboBox<>(discos.toArray(new Disco[0]));
+        int opcao = JOptionPane.showConfirmDialog(
+                this,
+                cbDiscos,
+                "Selecione o disco para excluir",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (opcao == JOptionPane.OK_OPTION) {
+            Disco selecionado = (Disco) cbDiscos.getSelectedItem();
+            if (selecionado != null) {
+                boolean sucesso = dao.excluir(selecionado.getId());
+                if (sucesso) {
+                    JOptionPane.showMessageDialog(this, "Disco excluído com sucesso!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao excluir o disco.");
+                }
+            }
+        }
+    }
+
 }
