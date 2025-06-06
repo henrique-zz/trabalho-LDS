@@ -1,0 +1,6 @@
+org
+org.lojadediscos.dao
+org.lojadediscos.model
+org.lojadediscos.services
+org.lojadediscos.util
+org.lojadediscos.view
