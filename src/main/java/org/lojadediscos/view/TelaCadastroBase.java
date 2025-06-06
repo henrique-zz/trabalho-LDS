@@ -5,6 +5,11 @@ import org.lojadediscos.services.RelatorioDiscos;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Classe base para as telas criadas do JavaSwing, contendo alguns elementos que terão em comum nas classes de tela de
+ * cadastro de discos e de clientes.
+ */
+
 public abstract class TelaCadastroBase extends JFrame {
 
     protected JButton btnSalvar = new JButton("Salvar");
@@ -14,6 +19,8 @@ public abstract class TelaCadastroBase extends JFrame {
     protected JButton btnCadastroCliente = new JButton("Ir para Cadastro de Clientes");
     protected JButton btnCadastroDiscos = new JButton("Ir para Cadastro de Discos");
     protected JButton btnRelatorioEstoque = new JButton("Gerar Relatório Estoque dos Discos");
+    protected JButton btnEditar = new JButton("Editar");
+
 
     public TelaCadastroBase(String titulo) {
         setTitle(titulo);
@@ -28,6 +35,7 @@ public abstract class TelaCadastroBase extends JFrame {
         btnCadastroCliente.setBounds(380, 10, 200, 30);
         btnCadastroDiscos.setBounds(380, 10, 200, 30);
         btnRelatorioEstoque.setBounds(320, 120, 250, 30);
+        btnEditar.setBounds(380, 170, 100, 30);
 
         add(btnSalvar);
         add(btnListar);
@@ -36,6 +44,7 @@ public abstract class TelaCadastroBase extends JFrame {
         add(btnCadastroCliente);
         add(btnCadastroDiscos);
         add(btnRelatorioEstoque);
+        add(btnEditar);
 
         btnVenda.addActionListener(this::irParaTelaVenda);
         btnCadastroCliente.addActionListener(this::abrirCadastroCliente);
@@ -46,6 +55,7 @@ public abstract class TelaCadastroBase extends JFrame {
     protected abstract void salvar(ActionEvent e);
     protected abstract void listar(ActionEvent e);
     protected abstract void excluir(ActionEvent e);
+    protected abstract void editar(ActionEvent e);
 
     private void irParaTelaVenda(ActionEvent e) {
         new TelaVenda();

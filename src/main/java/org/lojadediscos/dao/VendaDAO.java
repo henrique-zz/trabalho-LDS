@@ -7,6 +7,10 @@ import org.lojadediscos.util.HibernateUtil;
 
 import java.util.List;
 
+/**
+ * DAO para manipulação da entidade Venda no banco de dados.
+ */
+
 public class VendaDAO {
 
     public void salvar(Venda venda) {

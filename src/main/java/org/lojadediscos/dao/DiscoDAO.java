@@ -4,10 +4,11 @@ import org.lojadediscos.model.Disco;
 import org.lojadediscos.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.util.List;
+
+/**
+ * DAO para manipulação da entidade Disco no banco de dados.
+ */
 
 public class DiscoDAO {
 

@@ -2,6 +2,10 @@ package org.lojadediscos.model;
 
 import jakarta.persistence.*;
 
+/**
+ * Classe base para a criação da tabela "ItemVenda" no banco de dados, com os atributos sendo as colunas desta tabela.
+ */
+
 @Entity
 @Table(name = "itens_venda")
 public class ItemVenda {

@@ -1,9 +1,11 @@
 package org.lojadediscos.model;
 
 import jakarta.persistence.*;
+
 /**
- * Classe responsável por representar um disco na loja.
+ * Classe base para a criação da tabela "Disco" no banco de dados, com os atributos sendo as colunas desta tabela.
  */
+
 @Entity
 @Table(name = "discos") // diz que a classe irá virar a tabela "discos" do banco de dados
 public class Disco {

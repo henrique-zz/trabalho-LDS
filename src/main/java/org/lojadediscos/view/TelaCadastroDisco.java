@@ -7,6 +7,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+/**
+ * Classe para o cadastro de discos no nosso banco de dados, usando a TelaCadastroBase como pai, além de implementações
+ * que diferem dos atributos prsentes nesta.
+ */
+
 public class TelaCadastroDisco extends TelaCadastroBase {
 
     private JTextField txtTitulo = new JTextField(20);
@@ -56,6 +61,7 @@ public class TelaCadastroDisco extends TelaCadastroBase {
         btnSalvar.addActionListener(this::salvar);
         btnListar.addActionListener(this::listar);
         btnExcluir.addActionListener(this::excluir);
+        btnEditar.addActionListener(this::editar);
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -124,6 +130,32 @@ public class TelaCadastroDisco extends TelaCadastroBase {
                 } else {
                     JOptionPane.showMessageDialog(this, "Erro ao excluir o disco.");
                 }
+            }
+        }
+    }
+
+    @Override
+    protected void editar(ActionEvent e) {
+        DiscoDAO dao = new DiscoDAO();
+        List<Disco> discos = dao.listarTodos();
+
+        if (discos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum disco cadastrado.");
+            return;
+        }
+
+        JComboBox<Disco> cbDiscos = new JComboBox<>(discos.toArray(new Disco[0]));
+        int opcao = JOptionPane.showConfirmDialog(
+                this,
+                cbDiscos,
+                "Selecione o disco para editar",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (opcao == JOptionPane.OK_OPTION) {
+            Disco selecionado = (Disco) cbDiscos.getSelectedItem();
+            if (selecionado != null) {
+                new TelaEdicaoDisco(this, selecionado).setVisible(true);
             }
         }
     }

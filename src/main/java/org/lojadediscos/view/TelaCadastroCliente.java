@@ -1,13 +1,16 @@
 package org.lojadediscos.view;
 
 import org.lojadediscos.dao.ClienteDAO;
-import org.lojadediscos.dao.DiscoDAO;
 import org.lojadediscos.model.Cliente;
-import org.lojadediscos.model.Disco;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
+
+/**
+ * Classe para o cadastro de clientes no nosso banco de dados, usando a TelaCadastroBase como pai, além de implementações
+ * que diferem dos atributos prsentes nesta.
+ */
 
 public class TelaCadastroCliente extends TelaCadastroBase {
 
@@ -41,6 +44,7 @@ public class TelaCadastroCliente extends TelaCadastroBase {
         btnSalvar.addActionListener(this::salvar);
         btnListar.addActionListener(this::listar);
         btnExcluir.addActionListener(this::excluir);
+        btnEditar.addActionListener(this::editar);
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -97,7 +101,7 @@ public class TelaCadastroCliente extends TelaCadastroBase {
         );
 
         if (opcao == JOptionPane.OK_OPTION) {
-            Disco selecionado = (Disco) cbClientes.getSelectedItem();
+            Cliente selecionado = (Cliente) cbClientes.getSelectedItem();
             if (selecionado != null) {
                 boolean sucesso = dao.excluir(selecionado.getId());
                 if (sucesso) {
@@ -108,4 +112,31 @@ public class TelaCadastroCliente extends TelaCadastroBase {
             }
         }
     }
+
+    @Override
+    protected void editar(ActionEvent e) {
+        ClienteDAO dao = new ClienteDAO();
+        List<Cliente> clientes = dao.listarTodos();
+
+        if (clientes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum cliente cadastrado.");
+            return;
+        }
+
+        JComboBox<Cliente> cbClientes = new JComboBox<>(clientes.toArray(new Cliente[0]));
+        int opcao = JOptionPane.showConfirmDialog(
+                this,
+                cbClientes,
+                "Selecione o cliente para editar",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (opcao == JOptionPane.OK_OPTION) {
+            Cliente clienteSelecionado = (Cliente) cbClientes.getSelectedItem();
+            if (clienteSelecionado != null) {
+                new TelaEdicaoCliente(this, clienteSelecionado).setVisible(true);
+            }
+        }
+    }
+
 }

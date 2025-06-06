@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Classe base para a criação da tabela "Venda" no banco de dados, com os atributos sendo as colunas desta tabela.
+ */
+
 @Entity
 @Table(name = "vendas")
 public class Venda {

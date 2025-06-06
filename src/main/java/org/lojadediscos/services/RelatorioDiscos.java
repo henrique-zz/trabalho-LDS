@@ -14,6 +14,11 @@ import org.lojadediscos.model.Disco;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Classe com a lógica implementada para a geração do relatório de estoque de discos em um arquivo PDF, usando a bibliote
+ * ca iText do Java.
+ */
+
 public class RelatorioDiscos {
 
     public void gerarPDF() {

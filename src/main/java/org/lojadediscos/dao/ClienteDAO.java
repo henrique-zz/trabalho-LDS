@@ -7,6 +7,10 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
+/**
+ * DAO para manipulação da entidade Cliente no banco de dados.
+ */
+
 public class ClienteDAO {
 
     public void salvar(Cliente cliente) {
@@ -45,5 +49,18 @@ public class ClienteDAO {
             return false;
         }
     }
+
+    public void atualizar(Cliente cliente) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.update(cliente);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+    }
+
 
 }

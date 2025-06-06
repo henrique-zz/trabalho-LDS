@@ -12,6 +12,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.*;
 
+/**
+ * Classe para a tela quando apertarmos o botão "Realizar Venda", contendo a lógica para esta ser realizada corretamente,
+ * como a atualização dos estoques na nossa tabela do Disco após a compra.
+ */
+
+
 public class TelaVenda extends JFrame {
 
     private JComboBox<Cliente> cbClientes = new JComboBox<>();
