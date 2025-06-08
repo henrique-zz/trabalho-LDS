@@ -24,18 +24,20 @@ public abstract class TelaCadastroBase extends JFrame {
 
     public TelaCadastroBase(String titulo) {
         setTitle(titulo);
-        setSize(600, 300);
+        setSize(650, 300);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         btnSalvar.setBounds(80, 220, 100, 30);
         btnListar.setBounds(200, 220, 120, 30);
-        btnVenda.setBounds(350, 220, 200, 30);
-        btnExcluir.setBounds(380, 70, 100, 30);
+
         btnCadastroCliente.setBounds(380, 10, 200, 30);
         btnCadastroDiscos.setBounds(380, 10, 200, 30);
-        btnRelatorioEstoque.setBounds(320, 120, 250, 30);
-        btnEditar.setBounds(380, 170, 100, 30);
+
+        btnRelatorioEstoque.setBounds(380, 60, 250, 30);
+        btnExcluir.setBounds(380, 110, 100, 30);
+        btnEditar.setBounds(380, 160, 100, 30);
+        btnVenda.setBounds(380, 220, 200, 30);
 
         add(btnSalvar);
         add(btnListar);
