@@ -46,5 +46,16 @@ O sistema é desenvolvido em Java com interface gráfica usando Swing e um padr�
 
 1. Clone este repositório para dentro de uma pasta com o nome que desejar, então use alguma IDE (IntelliJ IDEA, NetBeans, Eclipse) que tenha compatibilidade com o Java:
 
+2. OBS: Caso deseje utilizar a internacionalização para o inglês e espanhol, basta utilizar os comandos
+   
+```bash
+java -jar nomedoseuarquivo-jar en US (Para Inglês)
+```
+```bash
+java -jar nomedoseuarquivo-jar es ES (Para Espanhol)
+```
+
 ```bash
 git clone https://github.com/seuusuario/lojadediscos.git
+
+
