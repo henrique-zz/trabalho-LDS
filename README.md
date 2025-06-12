@@ -51,7 +51,7 @@ O sistema é desenvolvido em Java com interface gráfica usando Swing e um padr�
 git clone https://github.com/seuusuario/lojadediscos.git
 ```
 
-2. OBS: Caso deseje utilizar a internacionalização para o inglês e espanhol, basta utilizar os comandos
+OBS: Caso deseje utilizar a internacionalização para o inglês e espanhol, basta utilizar os comandos:
    
 ```bash
 java -jar nomedoseuarquivo-jar en US (Para Inglês)
