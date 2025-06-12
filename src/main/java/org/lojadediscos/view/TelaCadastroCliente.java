@@ -2,6 +2,7 @@ package org.lojadediscos.view;
 
 import org.lojadediscos.dao.ClienteDAO;
 import org.lojadediscos.model.Cliente;
+import org.lojadediscos.util.I18n;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,17 +20,19 @@ public class TelaCadastroCliente extends TelaCadastroBase {
     private JTextField txtTelefone = new JTextField(20);
 
     public TelaCadastroCliente() {
-        super("Cadastro de Cliente");
+        super(); // chama o construtor pai sem argumentos
+        setTitle(I18n.getString("window.title.clientRegistration")); // define o título aqui
 
-        JLabel lblNome = new JLabel("Nome:");
+        // labels traduzidas
+        JLabel lblNome = new JLabel(I18n.getString("label.name"));
         lblNome.setBounds(20, 20, 80, 25);
         txtNome.setBounds(100, 20, 200, 25);
 
-        JLabel lblEmail = new JLabel("E-mail:");
+        JLabel lblEmail = new JLabel(I18n.getString("label.email"));
         lblEmail.setBounds(20, 60, 80, 25);
         txtEmail.setBounds(100, 60, 200, 25);
 
-        JLabel lblTelefone = new JLabel("Telefone:");
+        JLabel lblTelefone = new JLabel(I18n.getString("label.phone"));
         lblTelefone.setBounds(20, 100, 80, 25);
         txtTelefone.setBounds(100, 100, 200, 25);
 
@@ -40,7 +43,7 @@ public class TelaCadastroCliente extends TelaCadastroBase {
         add(lblTelefone);
         add(txtTelefone);
 
-        btnCadastroCliente.setVisible(false); // não permitir o botão que volta para esta mesma tela aparecer
+        btnCadastroCliente.setVisible(false);
         btnSalvar.addActionListener(this::salvar);
         btnListar.addActionListener(this::listar);
         btnExcluir.addActionListener(this::excluir);
@@ -52,14 +55,10 @@ public class TelaCadastroCliente extends TelaCadastroBase {
 
     @Override
     protected void salvar(ActionEvent e) {
-        Cliente cliente = new Cliente(
-                txtNome.getText(),
-                txtEmail.getText(),
-                txtTelefone.getText()
-        );
-        ClienteDAO dao = new ClienteDAO();
-        dao.salvar(cliente);
-        JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!");
+        Cliente cliente = new Cliente(txtNome.getText(), txtEmail.getText(), txtTelefone.getText());
+        new ClienteDAO().salvar(cliente);
+        // mensagem traduzida
+        JOptionPane.showMessageDialog(this, I18n.getString("message.success.clientSaved"));
     }
 
     @Override
@@ -68,14 +67,16 @@ public class TelaCadastroCliente extends TelaCadastroBase {
         List<Cliente> lista = dao.listarTodos();
 
         if (lista.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhum cliente cadastrado.");
+            // mensagem traduzida
+            JOptionPane.showMessageDialog(this, I18n.getString("message.info.noClientsRegistered"));
         } else {
             StringBuilder sb = new StringBuilder();
             for (Cliente cliente : lista) {
+                // labels da lista traduzidas
                 sb.append("ID: ").append(cliente.getId())
-                        .append(" | Nome: ").append(cliente.getNome())
-                        .append(" | E-mail: ").append(cliente.getEmail())
-                        .append(" | Telefone: ").append(cliente.getTelefone())
+                        .append(" | ").append(I18n.getString("label.name")).append(" ").append(cliente.getNome())
+                        .append(" | ").append(I18n.getString("label.email")).append(" ").append(cliente.getEmail())
+                        .append(" | ").append(I18n.getString("label.phone")).append(" ").append(cliente.getTelefone())
                         .append("\n");
             }
             JOptionPane.showMessageDialog(this, sb.toString());
@@ -88,7 +89,7 @@ public class TelaCadastroCliente extends TelaCadastroBase {
         List<Cliente> clientes = dao.listarTodos();
 
         if (clientes.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhum cliente cadastrado.");
+            JOptionPane.showMessageDialog(this, I18n.getString("message.info.noClientsRegistered"));
             return;
         }
 
@@ -96,7 +97,8 @@ public class TelaCadastroCliente extends TelaCadastroBase {
         int opcao = JOptionPane.showConfirmDialog(
                 this,
                 cbClientes,
-                "Selecione o cliente para excluir",
+                // título do diálogo traduzido
+                I18n.getString("dialog.title.selectClientToDelete"),
                 JOptionPane.OK_CANCEL_OPTION
         );
 
@@ -105,9 +107,10 @@ public class TelaCadastroCliente extends TelaCadastroBase {
             if (selecionado != null) {
                 boolean sucesso = dao.excluir(selecionado.getId());
                 if (sucesso) {
-                    JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso!");
+                    // mensagens traduzidas
+                    JOptionPane.showMessageDialog(this, I18n.getString("message.success.clientDeleted"));
                 } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao excluir o cliente.");
+                    JOptionPane.showMessageDialog(this, I18n.getString("message.error.deleteClient"));
                 }
             }
         }
@@ -119,7 +122,8 @@ public class TelaCadastroCliente extends TelaCadastroBase {
         List<Cliente> clientes = dao.listarTodos();
 
         if (clientes.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhum cliente cadastrado.");
+            // mensagem traduzida
+            JOptionPane.showMessageDialog(this, I18n.getString("message.info.noClientsRegistered"));
             return;
         }
 
@@ -127,7 +131,8 @@ public class TelaCadastroCliente extends TelaCadastroBase {
         int opcao = JOptionPane.showConfirmDialog(
                 this,
                 cbClientes,
-                "Selecione o cliente para editar",
+                // título do diálogo traduzido
+                I18n.getString("dialog.title.selectClientToEdit"),
                 JOptionPane.OK_CANCEL_OPTION
         );
 
@@ -138,5 +143,4 @@ public class TelaCadastroCliente extends TelaCadastroBase {
             }
         }
     }
-
 }

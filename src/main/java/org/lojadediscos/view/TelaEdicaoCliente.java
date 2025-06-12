@@ -2,6 +2,7 @@ package org.lojadediscos.view;
 
 import org.lojadediscos.dao.ClienteDAO;
 import org.lojadediscos.model.Cliente;
+import org.lojadediscos.util.I18n;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,8 @@ public class TelaEdicaoCliente extends JDialog {
     private final JTextField txtTelefone;
 
     public TelaEdicaoCliente(JFrame parent, Cliente cliente) {
-        super(parent, "Editar Cliente", true);
+        // título traduzido
+        super(parent, I18n.getString("window.title.editClient"), true);
         setSize(400, 250);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
@@ -28,25 +30,28 @@ public class TelaEdicaoCliente extends JDialog {
 
         JPanel painelCampos = new JPanel(new GridLayout(4, 2, 5, 5));
         painelCampos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        painelCampos.add(new JLabel("Nome:"));
+        // labels traduzidas
+        painelCampos.add(new JLabel(I18n.getString("label.name")));
         painelCampos.add(txtNome);
-        painelCampos.add(new JLabel("E-mail:"));
+        painelCampos.add(new JLabel(I18n.getString("label.email")));
         painelCampos.add(txtEmail);
-        painelCampos.add(new JLabel("Telefone:"));
+        painelCampos.add(new JLabel(I18n.getString("label.phone")));
         painelCampos.add(txtTelefone);
 
-        JButton btnSalvar = new JButton("Salvar");
+        // botões traduzidos
+        JButton btnSalvar = new JButton(I18n.getString("button.save"));
         btnSalvar.addActionListener(e -> {
             cliente.setNome(txtNome.getText());
             cliente.setEmail(txtEmail.getText());
             cliente.setTelefone(txtTelefone.getText());
 
             new ClienteDAO().atualizar(cliente);
-            JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso!");
+            // mensagem traduzida
+            JOptionPane.showMessageDialog(this, I18n.getString("message.success.clientUpdated"));
             dispose();
         });
 
-        JButton btnCancelar = new JButton("Cancelar");
+        JButton btnCancelar = new JButton(I18n.getString("button.cancel"));
         btnCancelar.addActionListener(e -> dispose());
 
         JPanel painelBotoes = new JPanel();

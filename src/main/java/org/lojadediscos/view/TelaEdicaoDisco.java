@@ -2,6 +2,7 @@ package org.lojadediscos.view;
 
 import org.lojadediscos.dao.DiscoDAO;
 import org.lojadediscos.model.Disco;
+import org.lojadediscos.util.I18n;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,35 +21,35 @@ public class TelaEdicaoDisco extends JDialog {
     private final JTextField txtEstoque;
 
     public TelaEdicaoDisco(JFrame parent, Disco disco) {
-        super(parent, "Editar Disco", true);
+        // título traduzido
+        super(parent, I18n.getString("window.title.editDisc"), true);
         setSize(400, 300);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
 
-        // Campos
         txtTitulo = new JTextField(disco.getTitulo());
         txtArtista = new JTextField(disco.getArtista());
         txtGenero = new JTextField(disco.getGenero());
         txtPreco = new JTextField(String.valueOf(disco.getPreco()));
         txtEstoque = new JTextField(String.valueOf(disco.getEstoque()));
 
-        JPanel painelCampos = new JPanel();
-        painelCampos.setLayout(new GridLayout(6, 2, 5, 5));
+        JPanel painelCampos = new JPanel(new GridLayout(6, 2, 5, 5));
         painelCampos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        painelCampos.add(new JLabel("Título:"));
+        // labels traduzidas
+        painelCampos.add(new JLabel(I18n.getString("label.title")));
         painelCampos.add(txtTitulo);
-        painelCampos.add(new JLabel("Artista:"));
+        painelCampos.add(new JLabel(I18n.getString("label.artist")));
         painelCampos.add(txtArtista);
-        painelCampos.add(new JLabel("Gênero:"));
+        painelCampos.add(new JLabel(I18n.getString("label.genre")));
         painelCampos.add(txtGenero);
-        painelCampos.add(new JLabel("Preço:"));
+        painelCampos.add(new JLabel(I18n.getString("label.price")));
         painelCampos.add(txtPreco);
-        painelCampos.add(new JLabel("Estoque:"));
+        painelCampos.add(new JLabel(I18n.getString("label.stock")));
         painelCampos.add(txtEstoque);
 
-        // Botões
-        JButton btnSalvar = new JButton("Salvar");
+        // botões traduzidos
+        JButton btnSalvar = new JButton(I18n.getString("button.save"));
         btnSalvar.addActionListener(e -> {
             try {
                 disco.setTitulo(txtTitulo.getText());
@@ -58,14 +59,16 @@ public class TelaEdicaoDisco extends JDialog {
                 disco.setEstoque(Integer.parseInt(txtEstoque.getText()));
 
                 new DiscoDAO().atualizar(disco);
-                JOptionPane.showMessageDialog(this, "Disco atualizado com sucesso!");
+                // mensagem traduzida
+                JOptionPane.showMessageDialog(this, I18n.getString("message.success.discUpdated"));
                 dispose();
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Erro: Preço ou estoque inválidos.");
+                // mensagem traduzida
+                JOptionPane.showMessageDialog(this, I18n.getString("message.error.invalidPriceOrStock"));
             }
         });
 
-        JButton btnCancelar = new JButton("Cancelar");
+        JButton btnCancelar = new JButton(I18n.getString("button.cancel"));
         btnCancelar.addActionListener(e -> dispose());
 
         JPanel painelBotoes = new JPanel();
@@ -74,5 +77,5 @@ public class TelaEdicaoDisco extends JDialog {
 
         add(painelCampos, BorderLayout.CENTER);
         add(painelBotoes, BorderLayout.SOUTH);
+        }
     }
-}

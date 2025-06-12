@@ -1,6 +1,7 @@
 package org.lojadediscos.view;
 
 import org.lojadediscos.services.RelatorioDiscos;
+import org.lojadediscos.util.I18n;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,28 +13,26 @@ import java.awt.event.ActionEvent;
 
 public abstract class TelaCadastroBase extends JFrame {
 
-    protected JButton btnSalvar = new JButton("Salvar");
-    protected JButton btnListar = new JButton("Listar Todos");
-    protected JButton btnVenda = new JButton("Realizar Venda");
-    protected JButton btnExcluir = new JButton("Excluir");
-    protected JButton btnCadastroCliente = new JButton("Ir para Cadastro de Clientes");
-    protected JButton btnCadastroDiscos = new JButton("Ir para Cadastro de Discos");
-    protected JButton btnRelatorioEstoque = new JButton("Gerar Relatório Estoque dos Discos");
-    protected JButton btnEditar = new JButton("Editar");
+    // os botões são inicializados sem texto. o texto será definido via i18n.
+    protected JButton btnSalvar = new JButton();
+    protected JButton btnListar = new JButton();
+    protected JButton btnVenda = new JButton();
+    protected JButton btnExcluir = new JButton();
+    protected JButton btnCadastroCliente = new JButton();
+    protected JButton btnCadastroDiscos = new JButton();
+    protected JButton btnRelatorioEstoque = new JButton();
+    protected JButton btnEditar = new JButton();
 
+    public TelaCadastroBase() {
 
-    public TelaCadastroBase(String titulo) {
-        setTitle(titulo);
         setSize(650, 300);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         btnSalvar.setBounds(80, 220, 100, 30);
         btnListar.setBounds(200, 220, 120, 30);
-
         btnCadastroCliente.setBounds(380, 10, 200, 30);
         btnCadastroDiscos.setBounds(380, 10, 200, 30);
-
         btnRelatorioEstoque.setBounds(380, 60, 250, 30);
         btnExcluir.setBounds(380, 110, 100, 30);
         btnEditar.setBounds(380, 160, 100, 30);
@@ -52,6 +51,20 @@ public abstract class TelaCadastroBase extends JFrame {
         btnCadastroCliente.addActionListener(this::abrirCadastroCliente);
         btnCadastroDiscos.addActionListener(this::abrirCadastroDisco);
         btnRelatorioEstoque.addActionListener(this::geracaoPDF);
+
+        updateTexts();
+    }
+
+    // método para centralizar a atualização dos textos dos botões
+    private void updateTexts() {
+        btnSalvar.setText(I18n.getString("button.save"));
+        btnListar.setText(I18n.getString("button.list"));
+        btnVenda.setText(I18n.getString("button.sell"));
+        btnExcluir.setText(I18n.getString("button.delete"));
+        btnEditar.setText(I18n.getString("button.edit"));
+        btnCadastroCliente.setText(I18n.getString("button.goToClientRegistration"));
+        btnCadastroDiscos.setText(I18n.getString("button.goToDiscRegistration"));
+        btnRelatorioEstoque.setText(I18n.getString("button.generateStockReport"));
     }
 
     protected abstract void salvar(ActionEvent e);
@@ -76,6 +89,6 @@ public abstract class TelaCadastroBase extends JFrame {
 
     protected void geracaoPDF(ActionEvent e){
         new RelatorioDiscos().gerarPDF();
-        JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso!");
+        JOptionPane.showMessageDialog(this, I18n.getString("message.success.reportGenerated"));
     }
 }

@@ -7,6 +7,7 @@ import org.lojadediscos.model.Cliente;
 import org.lojadediscos.model.Disco;
 import org.lojadediscos.model.ItemVenda;
 import org.lojadediscos.model.Venda;
+import org.lojadediscos.util.I18n;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,27 +25,30 @@ public class TelaVenda extends JFrame {
     private JComboBox<Disco> cbDiscos = new JComboBox<>();
     private JTextField txtQuantidade = new JTextField(5);
     private JTextArea txtCarrinho = new JTextArea(10, 30);
-    private JButton btnAdicionar = new JButton("Adicionar");
-    private JButton btnFinalizar = new JButton("Finalizar Venda");
-    private JButton btnCadastroDiscos = new JButton("Voltar");
+    // botões traduzidos
+    private JButton btnAdicionar = new JButton(I18n.getString("button.add"));
+    private JButton btnFinalizar = new JButton(I18n.getString("button.finalize"));
+    private JButton btnVoltar = new JButton(I18n.getString("button.back"));
 
     private List<ItemVenda> carrinho = new ArrayList<>();
 
     public TelaVenda() {
-        setTitle("Realizar Venda");
+        // título traduzido
+        setTitle(I18n.getString("window.title.sell"));
         setSize(500, 500);
         setLayout(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        JLabel lblCliente = new JLabel("Cliente:");
+        // labels traduzidas
+        JLabel lblCliente = new JLabel(I18n.getString("label.client"));
         lblCliente.setBounds(20, 20, 80, 25);
         cbClientes.setBounds(100, 20, 250, 25);
 
-        JLabel lblDisco = new JLabel("Disco:");
+        JLabel lblDisco = new JLabel(I18n.getString("label.disc"));
         lblDisco.setBounds(20, 60, 80, 25);
         cbDiscos.setBounds(100, 60, 250, 25);
 
-        JLabel lblQtd = new JLabel("Qtd:");
+        JLabel lblQtd = new JLabel(I18n.getString("label.quantity"));
         lblQtd.setBounds(20, 100, 80, 25);
         txtQuantidade.setBounds(100, 100, 50, 25);
 
@@ -53,7 +57,7 @@ public class TelaVenda extends JFrame {
         scroll.setBounds(20, 140, 440, 200);
 
         btnFinalizar.setBounds(150, 360, 180, 40);
-        btnCadastroDiscos.setBounds(150, 410, 180, 40);
+        btnVoltar.setBounds(150, 410, 180, 40);
 
         add(lblCliente);
         add(cbClientes);
@@ -64,30 +68,28 @@ public class TelaVenda extends JFrame {
         add(btnAdicionar);
         add(scroll);
         add(btnFinalizar);
-        add(btnCadastroDiscos);
+        add(btnVoltar);
 
         carregarClientes();
         carregarDiscos();
 
         btnAdicionar.addActionListener(this::adicionarAoCarrinho);
         btnFinalizar.addActionListener(this::finalizarVenda);
-        btnCadastroDiscos.addActionListener(this::voltar);
+        btnVoltar.addActionListener(this::voltar);
 
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
     private void carregarClientes() {
-        ClienteDAO clienteDAO = new ClienteDAO();
-        List<Cliente> clientes = clienteDAO.listarTodos();
+        List<Cliente> clientes = new ClienteDAO().listarTodos();
         for (Cliente cliente : clientes) {
             cbClientes.addItem(cliente);
         }
     }
 
     private void carregarDiscos() {
-        DiscoDAO discoDAO = new DiscoDAO();
-        List<Disco> discos = discoDAO.listarTodos();
+        List<Disco> discos = new DiscoDAO().listarTodos();
         for (Disco disco : discos) {
             cbDiscos.addItem(disco);
         }
@@ -98,7 +100,8 @@ public class TelaVenda extends JFrame {
         int quantidade = Integer.parseInt(txtQuantidade.getText());
 
         if (disco.getEstoque() < quantidade) {
-            JOptionPane.showMessageDialog(this, "Estoque insuficiente.");
+            // mensagem traduzida
+            JOptionPane.showMessageDialog(this, I18n.getString("message.error.insufficientStock"));
             return;
         }
 
@@ -106,7 +109,6 @@ public class TelaVenda extends JFrame {
         item.setDisco(disco);
         item.setQuantidade(quantidade);
         item.setPrecoUnitario(disco.getPreco());
-
         carrinho.add(item);
 
         txtCarrinho.append(disco.getTitulo() + " x" + quantidade + "\n");
@@ -114,31 +116,27 @@ public class TelaVenda extends JFrame {
 
     private void finalizarVenda(ActionEvent e) {
         if (carrinho.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Carrinho vazio.");
+            // mensagem traduzida
+            JOptionPane.showMessageDialog(this, I18n.getString("message.info.emptyCart"));
             return;
         }
 
-        Cliente cliente = (Cliente) cbClientes.getSelectedItem();
         Venda venda = new Venda();
-        venda.setCliente(cliente);
+        venda.setCliente((Cliente) cbClientes.getSelectedItem());
         venda.setData(new Date());
 
         for (ItemVenda item : carrinho) {
             item.setVenda(venda);
-
             Disco disco = item.getDisco();
             disco.setEstoque(disco.getEstoque() - item.getQuantidade());
-
-            DiscoDAO discoDAO = new DiscoDAO();
-            discoDAO.atualizar(disco);
+            new DiscoDAO().atualizar(disco);
         }
 
         venda.setItens(carrinho);
+        new VendaDAO().salvar(venda);
 
-        VendaDAO vendaDAO = new VendaDAO();
-        vendaDAO.salvar(venda);
-
-        JOptionPane.showMessageDialog(this, "Venda realizada com sucesso!");
+        // mensagem traduzida
+        JOptionPane.showMessageDialog(this, I18n.getString("message.success.saleCompleted"));
         new TelaCadastroDisco();
         dispose();
     }

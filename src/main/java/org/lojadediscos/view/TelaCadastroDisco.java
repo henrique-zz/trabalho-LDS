@@ -2,6 +2,7 @@ package org.lojadediscos.view;
 
 import org.lojadediscos.dao.DiscoDAO;
 import org.lojadediscos.model.Disco;
+import org.lojadediscos.util.I18n;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -21,25 +22,27 @@ public class TelaCadastroDisco extends TelaCadastroBase {
     private JTextField txtEstoque = new JTextField(5);
 
     public TelaCadastroDisco() {
-        super("Cadastro de Disco");
+        super(); // chama o construtor pai sem argumentos
+        setTitle(I18n.getString("window.title.discRegistration")); // I18N: Define o título aqui
 
-        JLabel lblTitulo = new JLabel("Título:");
+        // labels traduzidas
+        JLabel lblTitulo = new JLabel(I18n.getString("label.title"));
         lblTitulo.setBounds(20, 20, 80, 25);
         txtTitulo.setBounds(100, 20, 200, 25);
 
-        JLabel lblArtista = new JLabel("Artista:");
+        JLabel lblArtista = new JLabel(I18n.getString("label.artist"));
         lblArtista.setBounds(20, 60, 80, 25);
         txtArtista.setBounds(100, 60, 200, 25);
 
-        JLabel lblGenero = new JLabel("Gênero:");
+        JLabel lblGenero = new JLabel(I18n.getString("label.genre"));
         lblGenero.setBounds(20, 100, 80, 25);
         txtGenero.setBounds(100, 100, 200, 25);
 
-        JLabel lblPreco = new JLabel("Preço:");
+        JLabel lblPreco = new JLabel(I18n.getString("label.price"));
         lblPreco.setBounds(20, 140, 80, 25);
         txtPreco.setBounds(100, 140, 100, 25);
 
-        JLabel lblEstoque = new JLabel("Estoque:");
+        JLabel lblEstoque = new JLabel(I18n.getString("label.stock"));
         lblEstoque.setBounds(20, 180, 80, 25);
         txtEstoque.setBounds(100, 180, 100, 25);
 
@@ -54,10 +57,8 @@ public class TelaCadastroDisco extends TelaCadastroBase {
         add(lblEstoque);
         add(txtEstoque);
 
-        getRootPane().setDefaultButton(btnSalvar); // permite que seja acionado quando apertarmos "ENTER"
-
+        getRootPane().setDefaultButton(btnSalvar);
         btnCadastroDiscos.setVisible(false);
-        // não permitir o botão que volta para esta mesma tela aparecer
         btnSalvar.addActionListener(this::salvar);
         btnListar.addActionListener(this::listar);
         btnExcluir.addActionListener(this::excluir);
@@ -76,9 +77,9 @@ public class TelaCadastroDisco extends TelaCadastroBase {
                 Double.parseDouble(txtPreco.getText()),
                 Integer.parseInt(txtEstoque.getText())
         );
-        DiscoDAO dao = new DiscoDAO();
-        dao.salvar(disco);
-        JOptionPane.showMessageDialog(this, "Disco salvo com sucesso!");
+        new DiscoDAO().salvar(disco);
+        // mensagem traduzida
+        JOptionPane.showMessageDialog(this, I18n.getString("message.success.discSaved"));
     }
 
     @Override
@@ -87,16 +88,16 @@ public class TelaCadastroDisco extends TelaCadastroBase {
         List<Disco> lista = dao.listarTodos();
 
         if (lista.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhum disco cadastrado.");
+            // mensagem traduzida
+            JOptionPane.showMessageDialog(this, I18n.getString("message.info.noDiscsRegistered"));
         } else {
             StringBuilder sb = new StringBuilder();
             for (Disco disco : lista) {
+                // labels da lista e formato da moeda traduzidos
                 sb.append("ID: ").append(disco.getId())
-                        .append(" | Título: ").append(disco.getTitulo())
-                        .append(" | Artista: ").append(disco.getArtista())
-                        .append(" | Gênero: ").append(disco.getGenero())
-                        .append(" | Preço: ").append(disco.getPreco())
-                        .append(" | Estoque: ").append(disco.getEstoque())
+                        .append(" | ").append(I18n.getString("label.title")).append(" ").append(disco.getTitulo())
+                        .append(" | ").append(I18n.getString("label.artist")).append(" ").append(disco.getArtista())
+                        .append(" | ").append(I18n.getString("label.price")).append(" ").append(I18n.formatCurrency(disco.getPreco()))
                         .append("\n");
             }
             JOptionPane.showMessageDialog(this, sb.toString());
@@ -109,7 +110,8 @@ public class TelaCadastroDisco extends TelaCadastroBase {
         List<Disco> discos = dao.listarTodos();
 
         if (discos.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhum disco cadastrado.");
+            // mensagem traduzida
+            JOptionPane.showMessageDialog(this, I18n.getString("message.info.noDiscsRegistered"));
             return;
         }
 
@@ -117,7 +119,8 @@ public class TelaCadastroDisco extends TelaCadastroBase {
         int opcao = JOptionPane.showConfirmDialog(
                 this,
                 cbDiscos,
-                "Selecione o disco para excluir",
+                // título do diálogo traduzido
+                I18n.getString("dialog.title.selectDiscToDelete"),
                 JOptionPane.OK_CANCEL_OPTION
         );
 
@@ -126,9 +129,10 @@ public class TelaCadastroDisco extends TelaCadastroBase {
             if (selecionado != null) {
                 boolean sucesso = dao.excluir(selecionado.getId());
                 if (sucesso) {
-                    JOptionPane.showMessageDialog(this, "Disco excluído com sucesso!");
+                    // mensagens traduzidas
+                    JOptionPane.showMessageDialog(this, I18n.getString("message.success.discDeleted"));
                 } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao excluir o disco.");
+                    JOptionPane.showMessageDialog(this, I18n.getString("message.error.deleteDisc"));
                 }
             }
         }
@@ -140,7 +144,8 @@ public class TelaCadastroDisco extends TelaCadastroBase {
         List<Disco> discos = dao.listarTodos();
 
         if (discos.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhum disco cadastrado.");
+            // mensagem traduzida
+            JOptionPane.showMessageDialog(this, I18n.getString("message.info.noDiscsRegistered"));
             return;
         }
 
@@ -148,7 +153,8 @@ public class TelaCadastroDisco extends TelaCadastroBase {
         int opcao = JOptionPane.showConfirmDialog(
                 this,
                 cbDiscos,
-                "Selecione o disco para editar",
+                // título do diálogo traduzido
+                I18n.getString("dialog.title.selectDiscToEdit"),
                 JOptionPane.OK_CANCEL_OPTION
         );
 
@@ -159,5 +165,4 @@ public class TelaCadastroDisco extends TelaCadastroBase {
             }
         }
     }
-
 }
