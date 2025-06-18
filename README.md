@@ -52,12 +52,17 @@ git clone https://github.com/seuusuario/lojadediscos.git
 ```
 
 OBS: Caso deseje utilizar a internacionalização para o inglês e espanhol, basta utilizar os comandos:
-   
+
 ```bash
-java -jar nomedoseuarquivo-jar en US (Para Inglês)
+mvn clean package
 ```
 ```bash
-java -jar nomedoseuarquivo-jar es ES (Para Espanhol)
+   
+```bash
+java -jar target/nomedoseuarquivo-jar en US (Para Inglês)
+```
+```bash
+java -jar target/nomedoseuarquivo-jar es ES (Para Espanhol)
 ```
 
 2. Baixe e instale o MySQL Workbench, crie uma Database chamada "lojadediscos", e dentro do arquivo "hibernate.cfg.xml" dentro da linha
