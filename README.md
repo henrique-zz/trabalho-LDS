@@ -48,7 +48,7 @@ O sistema é desenvolvido em Java com interface gráfica usando Swing e um padr�
 
 
 ```bash
-git clone https://github.com/seuusuario/lojadediscos.git
+git clone https://github.com/henrique-zz/lojadediscos.git
 ```
 
 OBS: Caso deseje utilizar a internacionalização para o inglês e espanhol, basta utilizar os comandos:
