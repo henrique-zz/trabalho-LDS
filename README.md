@@ -56,7 +56,6 @@ OBS: Caso deseje utilizar a internacionalização para o inglês e espanhol, bas
 ```bash
 mvn clean package
 ```
-```bash
    
 ```bash
 java -jar target/nomedoseuarquivo-jar en US (Para Inglês)
