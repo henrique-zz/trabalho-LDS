@@ -70,4 +70,11 @@ java -jar target/nomedoseuarquivo.jar es ES (Para Espanhol)
 ```
 e coloque a senha do seu banco, para funcionar corretamente.
 
+---
+
+## To Do
+
+1. Uma interface melhor, com cores, botões com melhor organização.
+   
+2. Fazer esta interface de forma Web, apenas conectando toda a lógica em Java com o front-end.  
 
