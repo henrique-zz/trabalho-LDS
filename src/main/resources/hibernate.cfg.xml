@@ -9,7 +9,7 @@
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/lojadediscos</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">Luizpirata1.</property>
+        <property name="hibernate.connection.password"></property> <!-- A Senha aqui precisa ser ajustada, quando o banco de dados for criado -->
 
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
