@@ -60,5 +60,10 @@ java -jar nomedoseuarquivo-jar en US (Para Inglês)
 java -jar nomedoseuarquivo-jar es ES (Para Espanhol)
 ```
 
+2. Baixe e instale o MySQL Workbench, crie uma Database chamada "lojadediscos", e dentro do arquivo "hibernate.cfg.xml" dentro da linha
+```bash
+<property name="hibernate.connection.password"></property>
+```
+e coloque a senha do seu banco, para funcionar corretamente.
 
 
